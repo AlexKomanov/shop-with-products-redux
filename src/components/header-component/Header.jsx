@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
 
@@ -27,9 +28,13 @@ const Header = () => {
         <div className={classes.root}>
           <AppBar position="static">
             <Toolbar>
+             
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="home">
-                <HomeIcon fontSize="large" />
+              <Link to="/" >
+                <HomeIcon fontSize="large" style={{color: "white"}}/>
+                </Link>
               </IconButton>
+             
               <Typography variant="h5" className={classes.title}>
                 Alex Shop
               </Typography>

@@ -12,16 +12,15 @@ import Fab from '@material-ui/core/Fab';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import AddIcon from '@material-ui/icons/Add';
 import Chip from '@material-ui/core/Chip';
+import { Link } from "react-router-dom";
 
 const Product = () => {
-   
-    const products = useSelector((state) => state.allProducts.products);
-    const { id, title } = products[0];
 
     const useStyles = makeStyles((theme) =>({
         root: {
-          maxWidth: 345,
-          
+          maxWidth: 345,   
+          width: 345,   
+          height: 400,
         },
         margin: {
             margin: theme.spacing(1),
@@ -32,36 +31,53 @@ const Product = () => {
       }));
       
       const classes = useStyles();
+   
+    const products = useSelector((state) => state.allProducts.products);
+    const productsList = products.map((product) => {
+        const { id, title, image, price, category } = product;
+        return (
+           
+            <Card className="product-card" key={id}>
+               
+            <CardActionArea>
+            <Link to={`/product/${id}`}>
+              <CardMedia className="card-image"
+                component="img"
+                alt={title}
+                image={image}
+                title="Contemplative Reptile"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                 {category}
+                </Typography>
+              </CardContent>
+              </Link>
+            </CardActionArea>
+            <CardActions className="card-bottom">
+              <Fab variant="extended" color="secondary" aria-label="add" className={classes.margin}>
+              <AddIcon className={classes.extendedIcon} /> Add To Basket
+                  </Fab>
+                  <Button size="large" className={classes.margin}>
+            <h3>{price} $ </h3>
+          </Button>
+            </CardActions>
+           
+          </Card>
+          
+        );
+    });
+    
+    
+    
 
       return (
-        <Card className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              alt={title}
-              height="140"
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {title}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                across all continents except Antarctica
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions >
-            <Fab variant="extended" color="secondary" aria-label="add" className={classes.margin}>
-            <AddIcon className={classes.extendedIcon} /> Add To Basket
-                </Fab>
-                <Button size="large" className={classes.margin}>
-          Price: 200 $
-        </Button>
-          </CardActions>
-        </Card>
+          <div className="products-list">
+   {productsList}
+   </div>
       );
 }
 
